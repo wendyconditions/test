@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Modal Tester</title>
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/font-awesome.css" rel="stylesheet" />
+</head>
+
+<body ng-app="myApp" ng-controller="AppCtrl">
+
+    <script type="text/ng-template" id="modalTemplate.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+        </div>
+        <!--<div class="modal-body" id="modal-body">
+        <ul>
+            <li ng-repeat="item in $ctrl.items">
+                <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
+            </li>
+        </ul>
+        Selected: <b>{{ $ctrl.selected.item }}</b>
+    </div>-->
+
+        <div class="modal-body">
+            <ul class="nav nav-tabs" role="tablist">
+                <li id="personEntityTab" class="active"><a data-target="#personEntity" role="tab" data-toggle="tab"><span><i class="fa fa-user-circle"></i> Person</span></a></li>
+                <li id="organizationEntityTab"><a data-target="#organizationEntity" role="tab" data-toggle="tab"><span><i class="fa fa-bank"></i> Organization</span></a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="personEntity" ng-form="personForm">
+                    <table class="titleTable">
+                        <tr>
+                            <td>
+                                First Name
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="First Name" name="firstName" ng-model="newPerson.FirstName" required>
+                                <span class="error" ng-show="personForm.firstName.$touched && personForm.firstName.$invalid">First name is required.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Middle Name
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Middle Name" ng-model="newPerson.MiddleName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Last Name
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Last Name" name="lastName" ng-model="newPerson.LastName" required>
+                                <span class="error" ng-show="personForm.lastName.$touched && personForm.lastName.$invalid">Last name is required.
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Company
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Company" ng-model="newPerson.Company">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Title
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Title" ng-model="newPerson.Title">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Gender
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Gender" ng-model="newPerson.Gender">
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok(newPerson)">OK</button>
+                        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+                    </div>
+                    <!--<div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-disabled="!newPerson.LastName || !newPerson.FirstName" ng-if="!newPerson.TitleEntityID" ng-click="addNewPerson()"><i class="fa fa-user-circle"></i> Add</button>
+                        <button type="button" class="btn btn-success" ng-disabled="!newPerson.LastName || !newPerson.FirstName" ng-if="newPerson.TitleEntityID" ng-click="btnEditPerson(newPerson)"><i class="fa fa-user-circle"></i>Save Changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
+                    </div>-->
+                </div>
+
+                <div class="tab-pane fade" id="organizationEntity" ng-form="organizationForm">
+                    <table class="titleTable">
+                        <tr>
+                            <td>
+                                Full Name
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Organization Name" ng-model="newOrganization.OrganizationName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Display Name
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Display Name" name="organizationName" ng-model="newOrganization.DisplayName" required>
+                                <span class="error" ng-show="organizationForm.organizationName.$touched && organizationForm.organizationName.$invalid">
+                                    Display name is required.
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-disabled="!newOrganization.DisplayName" ng-if="newOrganization.ObjectID <= 0" ng-click="addNewOrganization()"><i class="fa fa-bank"></i> Add</button>
+                        <button type="button" class="btn btn-success" ng-disabled="!newOrganization.DisplayName" ng-if="newOrganization.ObjectID >= 1" ng-click="btnEditOrganization(newOrganization)"><i class="fa fa-bank"></i>Save Changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times-circle"></i> Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </script>
+
+
+
+    <!--<div>{{name}}</div>-->
+
+    <!--<modal-love name="name"></modal-love>-->
+
+    <button type="button" class="btn btn-default" ng-click="openComponentModal()">Open a component modal!</button>
+
+
+    <!--Scripts-->
+    <script src="../Scripts/jquery-3.3.1.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+    <!--My Scripts-->
+    <script src="controller.js"></script>
+</body>
+</html>
